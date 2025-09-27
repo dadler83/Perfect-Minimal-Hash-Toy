@@ -163,6 +163,7 @@ if (downloadRaylib) then
         }
         
         files {"../src/**.c", "../src/**.cpp", "../src/**.h", "../src/**.hpp", "../include/**.h", "../include/**.hpp"}
+        removefiles { "../src/hash-table/hash-main.cpp" }
         
         filter {"system:windows", "action:vs*"}
             files {"../src/*.rc", "../src/*.ico"}
