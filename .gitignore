@@ -406,3 +406,6 @@ Makefile
 *.swp
 *.swo
 *.swn
+
+# cmake build
+/cmake-build/*
