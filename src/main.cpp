@@ -1,18 +1,56 @@
-/*
-Raylib example file.
-This is an example main file for a simple raylib project.
-Use this as a starting point or replace it with your code.
-
-by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit https://creativecommons.org/publicdomain/zero/1.0/
-
-*/
-
+// raylib includes
 #include "raylib.h"
-
 #include "resource_dir.h"	// utility header for SearchAndSetResourceDir
+
+// json utility (for kvp)
+#include <nlohmann/json.hpp>
+
+// hashing lib
+#include "xxhash.h"
+
+// other
+#include <iostream>
+
+// Hash function using xxHash
+unsigned int hash(const char *key) {
+	#define TABLE_SIZE 100
+    // Use XXH32 to hash the key
+    unsigned int hashValue = XXH32(key, strlen(key), 0); // Seed = 0
+    return hashValue % TABLE_SIZE; // Map hash value to table size
+}
+
 
 int main ()
 {
+	using json = nlohmann::json;
+
+	json j2 = {
+		{"pi", 3.141},
+		{"happy", true},
+		{"name", "Niels"},
+		{"nothing", nullptr},
+		{"answer", {
+			{"everything", 42}
+		}},
+		{"list", {1, 0, 2}},
+		{"object", {
+			{"currency", "USD"},
+			{"value", 42.99}
+		}}
+	};
+	std::cout << j2.dump(4) << std::endl;
+
+	std::cout << "Result of hash: " << hash("randomString") << std::endl;
+
+	/*
+	Raylib example file.
+	This is an example main file for a simple raylib project.
+	Use this as a starting point or replace it with your code.
+
+	by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit https://creativecommons.org/publicdomain/zero/1.0/
+
+	*/
+
 	// Tell the window to use vsync and work on high DPI displays
 	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
 
