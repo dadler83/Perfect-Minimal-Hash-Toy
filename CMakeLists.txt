@@ -42,7 +42,7 @@ add_subdirectory(./xxHash/build/cmake)
 # )
 # # Make rlImGui available
 # FetchContent_MakeAvailable(rlImGui)
-add_subdirectory(./rlImGui)
+add_subdirectory(./rlImGui-cmake)
 
 # Adding our source files
 file(GLOB_RECURSE PROJECT_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/src/*.cpp") # Define PROJECT_SOURCES as a list of all source files
