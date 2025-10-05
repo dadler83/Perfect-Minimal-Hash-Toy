@@ -15,6 +15,12 @@ using json = nlohmann::json;
 #include <unordered_set>
 #include <unordered_map>
 
+// imgui wrapper
+#include "rlImGui.h"
+#include "imgui_impl_raylib.h"
+#include "imgui.h"
+
+
 
 // Hash function using xxHash
 unsigned int hash(const char *key, unsigned int numBits, unsigned int seed = 0) {
@@ -154,34 +160,47 @@ int main ()
 	by Jeffery Myers is marked with CC0 1.0. To view a copy of this license, visit https://creativecommons.org/publicdomain/zero/1.0/
 
 	*/
-	/*
+	int screenWidth = 1280;
+	int screenHeight = 800;
 
-	// Tell the window to use vsync and work on high DPI displays
-	SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
-
-	// Create the window and OpenGL context
-	InitWindow(1280, 800, "Hello Raylib");
+	SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
+	InitWindow(screenWidth, screenHeight, "raylib-Extras [ImGui] example - simple ImGui Demo");
+	SetTargetFPS(144);
+	rlImGuiSetup(true);
 
 	// Utility function from resource_dir.h to find the resources folder and set it as the current working directory so we can load from it
 	SearchAndSetResourceDir("resources");
-
 	// Load a texture from the resources directory
 	Texture wabbit = LoadTexture("wabbit_alpha.png");
+
 	
 	// game loop
 	while (!WindowShouldClose())		// run the loop untill the user presses ESCAPE or presses the Close button on the window
 	{
 		// drawing
 		BeginDrawing();
-
 		// Setup the back buffer for drawing (clear color and depth buffers)
 		ClearBackground(BLACK);
-
 		// draw some text using the default font
 		DrawText("Hello Raylib", 200,200,20,WHITE);
-
 		// draw our texture to the screen
 		DrawTexture(wabbit, 400, 200, WHITE);
+
+		// start ImGui Conent
+		rlImGuiBegin();
+		// show ImGui Content
+		bool open = true;
+		ImGui::ShowDemoWindow(&open);
+		open = true;
+		if (ImGui::Begin("Test Window", &open))
+		{
+			// ImGui::TextUnformatted(ICON_FA_JEDI);
+	
+			rlImGuiImage(&wabbit);
+		}
+		ImGui::End();
+		// end ImGui Content
+		rlImGuiEnd();
 		
 		// end the frame and get ready for the next one  (display frame, poll input, etc...)
 		EndDrawing();
@@ -191,9 +210,11 @@ int main ()
 	// unload our texture so it can be cleaned up
 	UnloadTexture(wabbit);
 
+	rlImGuiShutdown();		// cleans up ImGui
+
 	// destroy the window and cleanup the OpenGL context
 	CloseWindow();
-	*/
+	
 
 	return 0;
 }
